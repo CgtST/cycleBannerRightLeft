@@ -76,21 +76,21 @@
     self.leftIV = [[UIImageView alloc] init];
     self.leftIV.contentMode = UIViewContentModeScaleToFill;
     self.leftIV.userInteractionEnabled = YES;
-    [self.leftIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leftTapGes)]];
+//    [self.leftIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGes)]];
     [self.mainScrollView addSubview:self.leftIV];
     
     //图片视图；中间
     self.centerIV = [[UIImageView alloc] init];
     self.centerIV.contentMode = UIViewContentModeScaleToFill;
     self.centerIV.userInteractionEnabled = YES;
-    [self.centerIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(centerTapGes)]];
+    [self.centerIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGes)]];
     [self.mainScrollView addSubview:self.centerIV];
     
     //图片视图；右边
     self.rightIV = [[UIImageView alloc] init];
     self.rightIV.contentMode = UIViewContentModeScaleToFill;
     self.rightIV.userInteractionEnabled = YES;
-    [self.rightIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rightTapGes)]];
+//    [self.rightIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGes)]];
     [self.mainScrollView addSubview:self.rightIV];
     
     [self updateViewFrameSetting];
@@ -213,16 +213,13 @@
 
 -(void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
 {
-//   [self reloadImage];
+
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [self reloadImage];
     [self.mainScrollView setContentOffset:CGPointMake(ZXMainScrollViewWidth, 0) animated:NO] ;
     self.pageControl.currentPage = self.currentImageIndex;
-    if (self.clickImageBlock) {
-        self.clickImageBlock(self.currentImageIndex);
-    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
@@ -238,17 +235,12 @@
 
 
 #pragma mark -- action
--(void)leftTapGes{
-    
+-(void)tapGes{
+    if (self.clickImageBlock) {
+        self.clickImageBlock(self.currentImageIndex);
+    }
 }
 
--(void)rightTapGes{
-    
-}
-
--(void)centerTapGes{
-    
-}
 
 -(void)createTimer {
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:self.autoScrollTimeInterval target:self selector:@selector(automaticScroll) userInfo:nil repeats:YES];
